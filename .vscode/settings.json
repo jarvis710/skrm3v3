@@ -1,0 +1,14 @@
+{
+    "gitlens.worktrees.defaultLocation": "https://github.com/jarvis710/skrm3v3/tree/master/Marlin-bugfix-2.1.x/",
+    "git.repositoryScanMaxDepth": -1,
+    "gitlens.remotes": [
+    
+    ],
+    "gitlens.advanced.repositorySearchDepth": -1,
+    "gitlens.detectNestedRepositories": true,
+    "jupyter.allowUnauthorizedRemoteConnection": true,
+    "git.enableCommitSigning": true,
+    "git.fetchOnPull": true,
+    "git.openRepositoryInParentFolders": "always",
+    "git.postCommitCommand": "sync"
+}
