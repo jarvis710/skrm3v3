@@ -97,7 +97,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=60105",
+                "PLATFORMIO=60106",
                 "STM32G0xx",
                 "STM32G0B1xx",
                 "__MARLIN_FIRMWARE__",
