@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "C:/.conan/1ecbae/1/build/Release"
+		},
+		{
+			"name": "Marlin-bugfix-2.1.x",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}
