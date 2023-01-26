@@ -1626,7 +1626,7 @@
 #define Z_CLEARANCE_MULTI_PROBE     5 // Z Clearance between multiple probes  // "PIKA" Increase speed
 //#define Z_AFTER_PROBING           5 // Z position after probing is done
 
-#define Z_PROBE_LOW_POINT          -3 // Farthest distance below the trigger-point to go before stopping  // "PIKA" allows reach lower points
+#define Z_PROBE_LOW_POINT          -2 // Farthest distance below the trigger-point to go before stopping  // "PIKA" allows reach lower points
 
 // For M851 give a range for adjusting the Z probe offset
 #define Z_PROBE_OFFSET_RANGE_MIN -10 // 20
@@ -2030,7 +2030,7 @@
 
     // Beyond the probed grid, continue the implied tilt?
     // Default is to maintain the height of the nearest edge.
-    #define EXTRAPOLATE_BEYOND_GRID  // "PIKA" Disabled for better accuracy at edges
+    //#define EXTRAPOLATE_BEYOND_GRID  // "PIKA" Disabled for better accuracy at edges
 
     //
     // Subdivision of the grid by Catmull-Rom method.
