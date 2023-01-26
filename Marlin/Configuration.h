@@ -2030,7 +2030,7 @@
 
     // Beyond the probed grid, continue the implied tilt?
     // Default is to maintain the height of the nearest edge.
-    //#define EXTRAPOLATE_BEYOND_GRID  // "PIKA" Disabled for better accuracy at edges
+    #define EXTRAPOLATE_BEYOND_GRID  // "PIKA" Disabled for better accuracy at edges
 
     //
     // Subdivision of the grid by Catmull-Rom method.
