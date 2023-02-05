@@ -309,11 +309,7 @@
 
   #define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
   #if BOTH(ADAPTIVE_FAN_SLOWING, PIDTEMP)
-<<<<<<< HEAD
     #define TEMP_TUNING_MAINTAIN_FAN    // Don't slow fan speed during M303
-=======
-    #define NO_FAN_SLOWING_IN_PID_TUNING    // Don't slow fan speed during M303
->>>>>>> 6375d4bf36ca97416a69edc9153951dc8f869217
   #endif
 
   /**
