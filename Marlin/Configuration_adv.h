@@ -309,7 +309,11 @@
 
   #define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
   #if BOTH(ADAPTIVE_FAN_SLOWING, PIDTEMP)
+<<<<<<< HEAD
     #define TEMP_TUNING_MAINTAIN_FAN    // Don't slow fan speed during M303
+=======
+    #define NO_FAN_SLOWING_IN_PID_TUNING    // Don't slow fan speed during M303
+>>>>>>> 6375d4bf36ca97416a69edc9153951dc8f869217
   #endif
 
   /**
@@ -2222,7 +2226,7 @@
 #endif
 
 #if BOTH(AUTO_BED_LEVELING_UBL, EEPROM_SETTINGS)
-  //#define OPTIMIZED_MESH_STORAGE  // Store mesh with less precision to save EEPROM space
+  #define OPTIMIZED_MESH_STORAGE  // Store mesh with less precision to save EEPROM space
 #endif
 
 /**
@@ -2649,7 +2653,7 @@
    * Position to park head during tool change.
    * Doesn't apply to SWITCHING_TOOLHEAD, DUAL_X_CARRIAGE, or PARKING_EXTRUDER
    */
-  //#define TOOLCHANGE_PARK
+  //#define TOOLCHANGE_PARKDEBUG_LEVELING_FEATURE
   #if ENABLED(TOOLCHANGE_PARK)
     #define TOOLCHANGE_PARK_XY    { X_MIN_POS + 10, Y_MIN_POS + 10 }
     #define TOOLCHANGE_PARK_XY_FEEDRATE 6000  // (mm/min)
