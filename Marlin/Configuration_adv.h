@@ -543,6 +543,13 @@
  * The fan turns on automatically whenever any driver is enabled and turns
  * off (or reduces to idle speed) shortly after drivers are turned off.
  */
+
+ // turn on board fan full speed, experimental SKRM3V3
+ #define CONTROLLER_FAN2_PIN PB15
+  #if CONTROLLER_FAN2_PIN
+    #define CONTROLLERFAN_SPEED_ACTIVE 255
+  #endif 
+
 #define USE_CONTROLLER_FAN  // SKR MINIE3V3
 #if ENABLED(USE_CONTROLLER_FAN)
   #define CONTROLLER_FAN_PIN  PC7 //FAN2_PIN       // Set a custom pin for the controller fan
@@ -560,13 +567,7 @@
   // Use TEMP_SENSOR_BOARD as a trigger for enabling the controller fan
   //#define CONTROLLER_FAN_MIN_BOARD_TEMP 40  // (°C) Turn on the fan if the board reaches this temperature
 
-  // turn on board fan full speed, experimental
-    #if CONTROLLER_FAN2_PIN
-      #define FAN2_PIN PB15
-      #define CONTROLLERFAN_SPEED_ACTIVE 255
-    #endif 
-
-  #define CONTROLLER_FAN_EDITABLE         // Enable M710 configurable settings
+   #define CONTROLLER_FAN_EDITABLE         // Enable M710 configurable settings
   #if ENABLED(CONTROLLER_FAN_EDITABLE)
     #define CONTROLLER_FAN_MENU             // Enable the Controller Fan submenu
   #endif
