@@ -1548,7 +1548,7 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 20  // 10
+#define PROBING_MARGIN 10  // 10
 
 // X and Y axis travel speed (mm/min) between probes
 #define XY_PROBE_FEEDRATE (200*60)  // "PIKA" increase travel speed between probes
@@ -1624,7 +1624,7 @@
 #define Z_CLEARANCE_DEPLOY_PROBE   10 // Z Clearance for Deploy/Stow  // "PIKA" Increase speed
 #define Z_CLEARANCE_BETWEEN_PROBES  5 // Z Clearance between probe points  // "PIKA" Increase probe compatibility
 #define Z_CLEARANCE_MULTI_PROBE     5 // Z Clearance between multiple probes  // "PIKA" Increase speed
-//#define Z_AFTER_PROBING           5 // Z position after probing is done
+#define Z_AFTER_PROBING           5 // Z position after probing is done
 
 #define Z_PROBE_LOW_POINT          -3 // Farthest distance below the trigger-point to go before stopping  // "PIKA" allows reach lower points
 
@@ -1755,14 +1755,14 @@
 // @section geometry
 
 // The size of the printable area
-#define X_BED_SIZE 220  // "PIKA" Max usable bed size 230
-#define Y_BED_SIZE 220  // "PIKA" Max usable bed size 230
+#define X_BED_SIZE 230  // "PIKA" Max usable bed size 230
+#define Y_BED_SIZE 230  // "PIKA" Max usable bed size 230
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE + 15  // "PIKA" Stock physical limit 248
+#define X_MAX_POS X_BED_SIZE + 18  // "PIKA" Stock physical limit 248
 #define Y_MAX_POS Y_BED_SIZE + 5 // "PIKA" Stock physical limit 231
 #define Z_MAX_POS 250
 //#define I_MIN_POS 0
