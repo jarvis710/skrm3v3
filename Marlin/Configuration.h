@@ -130,8 +130,8 @@
  * Currently only supported for AVR, DUE, LPC1768/9 and STM32/STM32F1
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-//#define SERIAL_PORT_3 1
-//#define BAUDRATE_3 115200   // :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000] Enable to override BAUDRATE
+#define SERIAL_PORT_3 1
+#define BAUDRATE_3 115200   // :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000] Enable to override BAUDRATE
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -880,8 +880,9 @@
 // Enable for Polargraph Kinematics
 //#define POLARGRAPH
 #if ENABLED(POLARGRAPH)
-  #define POLARGRAPH_MAX_BELT_LEN 1035.0
-  #define DEFAULT_SEGMENTS_PER_SECOND 5
+  #define POLARGRAPH_MAX_BELT_LEN  1035.0 // (mm) Belt length at full extension. Override with M665 H.
+  #define DEFAULT_SEGMENTS_PER_SECOND 5   // Move segmentation based on duration
+  #define PEN_UP_DOWN_MENU                // Add "Pen Up" and "Pen Down" to the MarlinUI menu
 #endif
 
 // @section delta
@@ -1247,7 +1248,7 @@
 
 #define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2  // "PIKA" allows higher limits
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
-  #define MAX_ACCEL_EDIT_VALUES       { 6000, 6000, 200, 20000 } // ...or, set your own edit limits
+  #define MAX_ACCEL_EDIT_VALUES       { 6000, 6000, 300, 20000 } // ...or, set your own edit limits
 #endif
 
 /**
@@ -1260,9 +1261,9 @@
  *   M204 I    Angular Acceleration
  *   M204 J    Angular Travel Acceleration
  */
-#define DEFAULT_ACCELERATION                   500  // X, Y, Z ... and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION           500  // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION           1000  // X, Y, Z ... acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION                  3000  // X, Y, Z ... and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION          3000  // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION           3000  // X, Y, Z ... acceleration for travel (non printing) moves
 #if ENABLED(AXIS4_ROTATES)
   #define DEFAULT_ANGULAR_ACCELERATION        3000  // I, J, K acceleration for rotational-only printing moves
   #define DEFAULT_ANGULAR_TRAVEL_ACCELERATION 3000  // I, J, K acceleration for rotational-only travel (non printing) moves
@@ -1755,15 +1756,15 @@
 // @section geometry
 
 // The size of the printable area
-#define X_BED_SIZE 230  // "PIKA" Max usable bed size 230
-#define Y_BED_SIZE 230  // "PIKA" Max usable bed size 230
+#define X_BED_SIZE 220  // "PIKA" Max usable bed size 230
+#define Y_BED_SIZE 220  // "PIKA" Max usable bed size 230
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE + 18  // "PIKA" Stock physical limit 248
-#define Y_MAX_POS Y_BED_SIZE + 5 // "PIKA" Stock physical limit 231
+#define X_MAX_POS X_BED_SIZE //+ 18  // "PIKA" Stock physical limit 248
+#define Y_MAX_POS Y_BED_SIZE //+ 5 // "PIKA" Stock physical limit 231
 #define Z_MAX_POS 250
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
@@ -2020,7 +2021,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 3  // "PIKA" Customizable by menu
+  #define GRID_MAX_POINTS_X 5  // "PIKA" Customizable by menu
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -2036,7 +2037,7 @@
     // Subdivision of the grid by Catmull-Rom method.
     // Synthesizes intermediate points to produce a more detailed mesh.
     //
-    #define ABL_BILINEAR_SUBDIVISION
+    //#define ABL_BILINEAR_SUBDIVISION
     #if ENABLED(ABL_BILINEAR_SUBDIVISION)
       // Number of subdivisions between probe points
       #define BILINEAR_SUBDIVISIONS 3
@@ -2050,7 +2051,7 @@
   //========================= Unified Bed Leveling ============================
   //===========================================================================
 
-  #define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
+  //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
   #define MESH_INSET 10              // Set Mesh bounds as an inset region of the bed  // "PIKA" Center mesh
   #define GRID_MAX_POINTS_X 15      // Don't use more than 15 points per axis, implementation limited.  // "PIKA" Customizable by menu
@@ -2064,7 +2065,26 @@
   #define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
                                           // as the Z-Height correction value.
 
-  #define UBL_MESH_WIZARD         // Run several commands in a row to get a complete mesh
+  //#define UBL_MESH_WIZARD         // Run several commands in a row to get a complete mesh
+
+  /**
+   * Probing not allowed within the position of an obstacle.
+   */
+  //#define AVOID_OBSTACLES
+  #if ENABLED(AVOID_OBSTACLES)
+    #define CLIP_W  23  // Bed clip width, should be padded a few mm over its physical size
+    #define CLIP_H  14  // Bed clip height, should be padded a few mm over its physical size
+
+    // Obstacle Rectangles defined as { X1, Y1, X2, Y2 }
+    #define OBSTACLE1 { (X_BED_SIZE) / 4     - (CLIP_W) / 2,                       0, (X_BED_SIZE) / 4     + (CLIP_W) / 2, CLIP_H }
+    #define OBSTACLE2 { (X_BED_SIZE) * 3 / 4 - (CLIP_W) / 2,                       0, (X_BED_SIZE) * 3 / 4 + (CLIP_W) / 2, CLIP_H }
+    #define OBSTACLE3 { (X_BED_SIZE) / 4     - (CLIP_W) / 2, (Y_BED_SIZE) - (CLIP_H), (X_BED_SIZE) / 4     + (CLIP_W) / 2, Y_BED_SIZE }
+    #define OBSTACLE4 { (X_BED_SIZE) * 3 / 4 - (CLIP_W) / 2, (Y_BED_SIZE) - (CLIP_H), (X_BED_SIZE) * 3 / 4 + (CLIP_W) / 2, Y_BED_SIZE }
+
+    // The probed grid must be inset for G29 J. This is okay, since it is
+    // only used to compute a linear transformation for the mesh itself.
+    #define G29J_MESH_TILT_MARGIN ((CLIP_H) + 1)
+  #endif
 
 #elif ENABLED(MESH_BED_LEVELING)
 
@@ -2093,7 +2113,7 @@
 #endif
 
 // Add a menu item to move between bed corners for manual bed adjustment
-#define LCD_BED_TRAMMING
+//#define LCD_BED_TRAMMING
 
 #if ENABLED(LCD_BED_TRAMMING)
   #define BED_TRAMMING_INSET_LFRB { 30, 30, 30, 30 } // (mm) Left, Front, Right, Back insets
@@ -2160,10 +2180,10 @@
 #define Z_SAFE_HOMING  // "PIKA" Homing Z at center of bed
 
 #if ENABLED(Z_SAFE_HOMING)
-  //#define Z_SAFE_HOMING_X_POINT X_CENTER  // X point for Z homing
-  //#define Z_SAFE_HOMING_Y_POINT Y_CENTER  // Y point for Z homing
-  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE - 10) / 2)    // X point for Z homing
-  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE - 10) / 2)    // Y point for Z homing
+  #define Z_SAFE_HOMING_X_POINT X_CENTER  // X point for Z homing
+  #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // Y point for Z homing
+  //#define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE - 10) / 2)    // X point for Z homing
+  //#define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE - 10) / 2)    // Y point for Z homing
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
