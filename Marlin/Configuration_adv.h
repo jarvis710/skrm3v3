@@ -308,11 +308,11 @@
   #define THERMAL_PROTECTION_PERIOD 40        // Seconds
   #define THERMAL_PROTECTION_HYSTERESIS 4     // Degrees Celsius
 
-  //#define ADAPTIVE_FAN_SLOWING              // Slow down the part-cooling fan if the temperature drops
+  #define ADAPTIVE_FAN_SLOWING              // Slow down the part-cooling fan if the temperature drops
   #if ENABLED(ADAPTIVE_FAN_SLOWING)
-    //#define REPORT_ADAPTIVE_FAN_SLOWING     // Report fan slowing activity to the console
+    #define REPORT_ADAPTIVE_FAN_SLOWING     // Report fan slowing activity to the console
     #if EITHER(MPCTEMP, PIDTEMP)
-      //#define TEMP_TUNING_MAINTAIN_FAN      // Don't slow down the fan speed during M303 or M306 T
+      #define TEMP_TUNING_MAINTAIN_FAN      // Don't slow down the fan speed during M303 or M306 T
     #endif
   #endif
 
@@ -574,10 +574,10 @@
  */
 #define USE_CONTROLLER_FAN  // SKR MINIE3V3
 #if ENABLED(USE_CONTROLLER_FAN)
-  #define CONTROLLER_FAN_PIN  PC7 //FAN2_PIN       // Set a custom pin for the controller fan
-  #define CONTROLLER_FAN1_PIN PC6 //FAN1_PIN        // Set a custom pin for second controller fan
-  //#define CONTROLLER_FAN_USE_Z_ONLY       // With this option only the Z axis is considered
-  //#define CONTROLLER_FAN_IGNORE_Z         // Ignore Z stepper. Useful when stepper timeout is disabled.
+  #define CONTROLLER_FAN_PIN  FAN1_PIN // PC7 //FAN2_PIN       // Set a custom pin for the controller fan
+  #define CONTROLLER_FAN1_PIN -1 //PC6 //FAN1_PIN        // Set a custom pin for second controller fan
+  #define CONTROLLER_FAN_USE_Z_ONLY       // With this option only the Z axis is considered
+  #define CONTROLLER_FAN_IGNORE_Z         // Ignore Z stepper. Useful when stepper timeout is disabled.
   #define CONTROLLERFAN_SPEED_MIN         0 // (0-255) Minimum speed. (If set below this value the fan is turned off.)
   #define CONTROLLERFAN_SPEED_ACTIVE    255 // (0-255) Active speed, used when any motor is enabled
   #define CONTROLLERFAN_SPEED_IDLE        0 // (0-255) Idle speed, used when motors are disabled
