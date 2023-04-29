@@ -103,6 +103,7 @@
                 "__MARLIN_FIRMWARE__",
                 "NDEBUG",
                 "HAL_STM32",
+                "PLATFORM_M997_SUPPORT",
                 "USBCON",
                 "USBD_USE_CDC",
                 "TIM_IRQ_PRIO=13",

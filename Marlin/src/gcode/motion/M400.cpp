@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2023 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -19,11 +19,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#ifndef ENV_VALIDATE_H
-#define ENV_VALIDATE_H
 
-#if NOT_TARGET(STM32G0xx) || NOT_TARGET(STM32G0B1xx)
-  #error "Oops! Select an STM32G0 board in 'Tools > Board.'"
-#endif
+#include "../gcode.h"
+#include "../../module/planner.h"
 
-#endif
+/**
+ * M400: Finish all moves
+ */
+void GcodeSuite::M400() {
+
+  planner.synchronize();
+
+}
