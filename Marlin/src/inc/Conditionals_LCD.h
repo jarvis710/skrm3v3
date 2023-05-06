@@ -328,24 +328,22 @@
   #define IS_ULTIPANEL 1
 #endif
 
-// TFT Legacy Compatibility
+// TFT Legacy options masquerade as TFT_GENERIC
 #if ANY(FSMC_GRAPHICAL_TFT, SPI_GRAPHICAL_TFT, TFT_320x240, TFT_480x320, TFT_320x240_SPI, TFT_480x320_SPI, TFT_LVGL_UI_FSMC, TFT_LVGL_UI_SPI)
   #define IS_LEGACY_TFT 1
   #define TFT_GENERIC
-#endif
-
-#if ANY(FSMC_GRAPHICAL_TFT, TFT_320x240, TFT_480x320, TFT_LVGL_UI_FSMC)
-  #define TFT_INTERFACE_FSMC
-#elif ANY(SPI_GRAPHICAL_TFT, TFT_320x240_SPI, TFT_480x320_SPI, TFT_LVGL_UI_SPI)
-  #define TFT_INTERFACE_SPI
-#endif
-
-#if EITHER(FSMC_GRAPHICAL_TFT, SPI_GRAPHICAL_TFT)
-  #define TFT_CLASSIC_UI
-#elif ANY(TFT_320x240, TFT_480x320, TFT_320x240_SPI, TFT_480x320_SPI)
-  #define TFT_COLOR_UI
-#elif EITHER(TFT_LVGL_UI_FSMC, TFT_LVGL_UI_SPI)
-  #define TFT_LVGL_UI
+  #if ANY(FSMC_GRAPHICAL_TFT, TFT_320x240, TFT_480x320, TFT_LVGL_UI_FSMC)
+    #define TFT_INTERFACE_FSMC
+  #elif ANY(SPI_GRAPHICAL_TFT, TFT_320x240_SPI, TFT_480x320_SPI, TFT_LVGL_UI_SPI)
+    #define TFT_INTERFACE_SPI
+  #endif
+  #if EITHER(FSMC_GRAPHICAL_TFT, SPI_GRAPHICAL_TFT)
+    #define TFT_CLASSIC_UI
+  #elif ANY(TFT_320x240, TFT_480x320, TFT_320x240_SPI, TFT_480x320_SPI)
+    #define TFT_COLOR_UI
+  #elif EITHER(TFT_LVGL_UI_FSMC, TFT_LVGL_UI_SPI)
+    #define TFT_LVGL_UI
+  #endif
 #endif
 
 // FSMC/SPI TFT Panels (LVGL)
@@ -1671,7 +1669,7 @@
 #endif
 
 #if ANY(HAS_SPI_TFT, HAS_FSMC_TFT, HAS_LTDC_TFT)
-  #include "../lcd/tft_io/tft_orientation.h"
+  #include "../lcd/tft_io/tft_orientation.h" // for TFT_COLOR_UI_PORTRAIT
 #endif
 
 #if ENABLED(TFT_RES_320x240)
@@ -1688,8 +1686,13 @@
   #define TFT_HEIGHT 272
   #define GRAPHICAL_TFT_UPSCALE 2
 #elif ENABLED(TFT_RES_480x320)
-  #define TFT_WIDTH  480
-  #define TFT_HEIGHT 320
+  #if ENABLED(TFT_COLOR_UI_PORTRAIT)
+    #define TFT_WIDTH  320
+    #define TFT_HEIGHT 480
+  #else
+    #define TFT_WIDTH  480
+    #define TFT_HEIGHT 320
+  #endif
   #define GRAPHICAL_TFT_UPSCALE 3
 #elif ENABLED(TFT_RES_1024x600)
   #define TFT_WIDTH  1024
@@ -1710,7 +1713,7 @@
     #elif ENABLED(TFT_INTERFACE_FSMC)
       #define TFT_320x240
     #endif
-  #elif TFT_HEIGHT == 320
+  #elif TFT_HEIGHT == 320 || (TFT_HEIGHT == 480 && ENABLED(TFT_COLOR_UI_PORTRAIT))
     #if ENABLED(TFT_INTERFACE_SPI)
       #define TFT_480x320_SPI
     #elif ENABLED(TFT_INTERFACE_FSMC)
@@ -1772,17 +1775,6 @@
         #define HAS_RES_TOUCH_BUTTONS 1
       #endif
     #endif
-  #endif
-#endif
-
-// XPT2046_** Compatibility
-#if !(defined(TOUCH_CALIBRATION_X) || defined(TOUCH_CALIBRATION_Y) || defined(TOUCH_OFFSET_X) || defined(TOUCH_OFFSET_Y) || defined(TOUCH_ORIENTATION))
-  #if defined(XPT2046_X_CALIBRATION) && defined(XPT2046_Y_CALIBRATION) && defined(XPT2046_X_OFFSET) && defined(XPT2046_Y_OFFSET)
-    #define TOUCH_CALIBRATION_X  XPT2046_X_CALIBRATION
-    #define TOUCH_CALIBRATION_Y  XPT2046_Y_CALIBRATION
-    #define TOUCH_OFFSET_X       XPT2046_X_OFFSET
-    #define TOUCH_OFFSET_Y       XPT2046_Y_OFFSET
-    #define TOUCH_ORIENTATION    TOUCH_LANDSCAPE
   #endif
 #endif
 
