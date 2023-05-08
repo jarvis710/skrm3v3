@@ -10,5 +10,6 @@
     "git.enableCommitSigning": true,
     "git.fetchOnPull": true,
     "git.openRepositoryInParentFolders": "always",
-    "git.postCommitCommand": "sync"
+    "git.postCommitCommand": "sync",
+    "cmake.sourceDirectory": "E:/SKRM3V3/skrm3v3/buildroot/share/cmake"
 }
