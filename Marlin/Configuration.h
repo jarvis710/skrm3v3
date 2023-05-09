@@ -2097,11 +2097,11 @@
 
   #define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 15              // Set Mesh bounds as an inset region of the bed  // "PIKA" Center mesh
+  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed  // "PIKA" Center mesh
   #define GRID_MAX_POINTS_X 15      // Don't use more than 15 points per axis, implementation limited.  // "PIKA" Customizable by menu
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
-  //#define UBL_HILBERT_CURVE       // Use Hilbert distribution for less travel when probing multiple points
+  #define UBL_HILBERT_CURVE       // Use Hilbert distribution for less travel when probing multiple points
 
   #define UBL_TILT_ON_MESH_POINTS         // Use nearest mesh points with G29 J for better Z reference
   //#define UBL_TILT_ON_MESH_POINTS_3POINT  // Use nearest mesh points with G29 J0 (3-point)
@@ -2139,8 +2139,8 @@
   //=================================== Mesh ==================================
   //===========================================================================
 
-  #define MESH_INSET 15          // Set Mesh bounds as an inset region of the bed  // "PIKA" Center mesh
-  #define GRID_MAX_POINTS_X 7    // Don't use more than 7 points per axis, implementation limited.  // "PIKA" Customizable by menu
+  #define MESH_INSET 1          // Set Mesh bounds as an inset region of the bed  // "PIKA" Center mesh
+  #define GRID_MAX_POINTS_X 15    // Don't use more than 7 points per axis, implementation limited.  // "PIKA" Customizable by menu
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
@@ -3001,8 +3001,15 @@
 // This is RAMPS-compatible using a single 10-pin connector.
 // (For CR-10 owners who want to replace the Melzi Creality board but retain the display)
 //
-#define CR10_STOCKDISPLAY //"PIKA" for BTT TFT35 V3
-
+#define CR10_STOCKDISPLAY 1 //"PIKA" for BTT TFT35 V3
+#if  CR10_STOCKDISPLAY
+  #define HAS_GCODE_PREVIEW 1
+  #if NONE(TJC_DISPLAY, SYNWIT_DISPLAY)
+    #if CR10_TFT_PINMAP
+      #define HAS_GCODE_PREVIEW 1
+    #endif
+  #endif 
+#endif 
 //
 // Ender-2 OEM display, a variant of the MKS_MINI_12864
 //
