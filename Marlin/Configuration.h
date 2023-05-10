@@ -1671,8 +1671,8 @@
 // Require minimum nozzle and/or bed temperature for probing
 //#define PREHEAT_BEFORE_PROBING
 #if ENABLED(PREHEAT_BEFORE_PROBING)
-  #define PROBING_NOZZLE_TEMP 120   // (°C) Only applies to E0 at this time
-  #define PROBING_BED_TEMP     50
+  #define PROBING_NOZZLE_TEMP  0   // (°C) Only applies to E0 at this time
+  #define PROBING_BED_TEMP     60
 #endif
 
 // For Inverting Stepper Enable Pins (Active Low) use 0, Non Inverting (Active High) use 1
@@ -1765,12 +1765,12 @@
 // @section geometry
 
 // The size of the printable area
-#define X_BED_SIZE 235  // "PIKA" Max usable bed size
-#define Y_BED_SIZE 235  // "PIKA" Max usable bed size
+#define X_BED_SIZE 220  // "PIKA" Max usable bed size
+#define Y_BED_SIZE 220  // "PIKA" Max usable bed size
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
-#define X_MIN_POS 0
-#define Y_MIN_POS 0
+#define X_MIN_POS -10
+#define Y_MIN_POS -10
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
@@ -2020,7 +2020,7 @@
  * Turn on with the command 'M111 S32'.
  * NOTE: Requires a lot of PROGMEM!
  */
-//#define DEBUG_LEVELING_FEATURE
+#define DEBUG_LEVELING_FEATURE
 
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL, PROBE_MANUALLY)
   // Set a height for the start of manual adjustment
@@ -2049,7 +2049,7 @@
   /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
-  //#define G26_MESH_VALIDATION
+  #define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
     #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for G26.
@@ -2140,7 +2140,7 @@
   //===========================================================================
 
   #define MESH_INSET 1          // Set Mesh bounds as an inset region of the bed  // "PIKA" Center mesh
-  #define GRID_MAX_POINTS_X 15    // Don't use more than 7 points per axis, implementation limited.  // "PIKA" Customizable by menu
+  #define GRID_MAX_POINTS_X 7    // Don't use more than 7 points per axis, implementation limited.  // "PIKA" Customizable by menu
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
@@ -3001,15 +3001,8 @@
 // This is RAMPS-compatible using a single 10-pin connector.
 // (For CR-10 owners who want to replace the Melzi Creality board but retain the display)
 //
-#define CR10_STOCKDISPLAY 1 //"PIKA" for BTT TFT35 V3
-#if  CR10_STOCKDISPLAY
-  #define HAS_GCODE_PREVIEW 1
-  #if NONE(TJC_DISPLAY, SYNWIT_DISPLAY)
-    #if CR10_TFT_PINMAP
-      #define HAS_GCODE_PREVIEW 1
-    #endif
-  #endif 
-#endif 
+#define CR10_STOCKDISPLAY //"PIKA" for BTT TFT35 V3
+
 //
 // Ender-2 OEM display, a variant of the MKS_MINI_12864
 //
