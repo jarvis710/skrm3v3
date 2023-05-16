@@ -220,6 +220,7 @@ class RTS {
   public:
     RTS();
     static void onStartup();
+    static void onIdle();
     static int16_t receiveData();
     static void sendData();
     static void sendData(const String&, const uint32_t, const uint8_t=VarAddr_W);
